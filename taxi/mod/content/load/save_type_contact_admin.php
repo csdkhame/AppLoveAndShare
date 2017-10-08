@@ -2,7 +2,7 @@
 include('../../../includes/class.mysql.php');
 $db = New DB();
 $db->connectdb('admin_app','admin_MANbooking','252631MANbooking');
-$table = 'shopping_contact_type';
+$table = 'shopping_contact_admin_type';
 
 if($_GET[action]=='add'){
 	

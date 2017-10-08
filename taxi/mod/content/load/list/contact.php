@@ -23,24 +23,12 @@ while($arr[contact] = $db->fetch($res[contact])){
  $res[product] = $db->select_query("SELECT * FROM shopping_product WHERE id='".$arr[place][id]."' ");
  $arr[product] = $db->fetch($res[product]);
  
-   $res[con_type] = $db->select_query("SELECT * FROM shopping_contact_type WHERE id='".$arr[contact][usertype]."' ");
+  $res[con_type] = $db->select_query("SELECT * FROM shopping_contact_type WHERE id='".$arr[contact][usertype]."' ");
   $arr[con_type] = $db->fetch($res[con_type]);
  
 	
-if($arr[contact][usertype]=='op'){
-	
-$type='พนักงานต้อนรับ';
-	
-}
-
-if($arr[contact][usertype]=='sale'){
-	
-
-$type='ฝ่ายขาย';
-	
-}
-	
-	
+ $res[conadd_type] = $db->select_query("SELECT * FROM shopping_contact_admin_type WHERE id='".$arr[contact][admintype]."' ");
+  $arr[conadd_type] = $db->fetch($res[conadd_type]);
 	
 	
 	 
@@ -48,13 +36,6 @@ $type='ฝ่ายขาย';
  $arr[type] = $db->fetch($res[com]);
  
 
- 
- 
-
-			///////////////
- 
- 
- 
 
 	//Comment Icon
 	if($arr[contact][enable_comment]){
@@ -94,18 +75,6 @@ $type='ฝ่ายขาย';
 
 
  <? } ?>
-
-
-
-
- 
-
-
-
-
-
-
-
 
 
 <? 
@@ -213,10 +182,6 @@ return false ;
 
 
  
- 
- 
- 
- 
  <?
  
  
@@ -303,19 +268,6 @@ $arr[product] = $db->fetch($res[product]);
 <? } ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?
 
  if($_GET[op] == "sub_add_action"  ){
@@ -348,13 +300,6 @@ $arr[product] = $db->fetch($res[product]);
 ?>
 
 
-
-
-
-
-
- 
- 
  
  <?
  if($_GET[op] == "sub_edit_action"  ){
@@ -385,10 +330,6 @@ $arr[product] = $db->fetch($res[product]);
  
  ?>
  
- 
- 
- 
- 
  <?
   if($_GET[op] == "sub_del"){
 	//////////////////////////////////////////// óź Form
@@ -399,9 +340,3 @@ $arr[product] = $db->fetch($res[product]);
 		$db->closedb ();
   }
 ?>
- 
- 
- 
- 
- 
- 

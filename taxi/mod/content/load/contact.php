@@ -1069,7 +1069,7 @@ if($_POST[check_photo_id_logo]==1){
 
 <script>
 	$('#txt_btn_save').click(function(){
-		var url = 'mod/content/load/save_type_contact.php?action=add&op=admintype';
+		var url = 'mod/content/load/save_type_contact_admin.php?action=add';
 		$.post( url,$( '#add_type_form' ).serialize(), function( data ) {
 //		  $( ".result" ).html( data );
 			console.log(data);
@@ -1099,7 +1099,7 @@ if($_POST[check_photo_id_logo]==1){
 	}
 	function saveEditType(id){
 	
-		var url = 'mod/content/load/save_type_contact.php?action=edit&op=admintype&id='+id;
+		var url = 'mod/content/load/save_type_contact_admin.php?action=edit&id='+id;
 		var name_th = $('#name_th_'+id).val();
 		var name_en = $('#name_en_'+id).val();
 		var name_cn = $('#name_cn_'+id).val();
@@ -1129,7 +1129,7 @@ if($_POST[check_photo_id_logo]==1){
 	}
 	function delType(id){
 		
-		var url = 'mod/content/load/save_type_contact.php?action=del&op=admintype&id='+id;
+		var url = 'mod/content/load/save_type_contact_admin.php?action=del&id='+id;
 		$.post( url, function( data ) {
 			console.log(data);
 			if(data==1){
@@ -1142,7 +1142,7 @@ if($_POST[check_photo_id_logo]==1){
 		});	
 	}
 	function restoreType(id){
-		var url = 'mod/content/load/save_type_contact.php?action=restore&op=admintype&id='+id;
+		var url = 'mod/content/load/save_type_contact_admin.php?action=restore&id='+id;
 		$.post( url, function( data ) {
 			console.log(data);
 			if(data==1){
