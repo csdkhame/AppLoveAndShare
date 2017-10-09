@@ -62,10 +62,162 @@ while($arr[project] = $db->fetch($res[project])){
         
          </td>
       </tr>
+     <!-- ***************** Open Time ************************* --> 
+     <?php
+      $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+ 
+$res[opentime] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1   order by id asc ");
+$count_days = $db->rows($res[opentime]);
+
+     ?>
     <tr>
       <td width="100" class="font-22"><strong>เปิดบริการ</strong></td>
-      <td><span class="font-22">ทุกวัน <b>(<? echo $arr[project][start_time];?> - <? echo $arr[project][finish_time];?>)</span></td>
+      <td>
+      <span class="font-22">
+      <?php
+      if($count_days == 7){
+				?>
+				ทุกวัน
+				<?php
+			}else{
+				?>
+				<table width="100%">
+					<tr>
+						<td>วัน</td>
+						<td>เวลาเปิด</td>
+						<td>เวลาปิด</td>
+					</tr>
+				
+				<?php
+				$i = 1;
+				while($arr[opentime] = $db->fetch($res[opentime])){
+					?>
+					<tr>
+						<td><?=$arr[opentime][product_day];?></td>
+						<?php
+						if($arr[opentime][open_always] == 1){
+							?>
+							<td colspan="2"  >
+								เปิดตลาด 24 ชั่วโมง
+							</td>
+							
+							<?php
+						}else{
+							?>
+							<td><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+						<td><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
+							<?php
+						}
+						?>
+						
+					</tr>
+					
+					<?php
+					$i++;
+				}
+				?>
+				</table>
+				<?php
+			}
+      ?>
+        <!--(<? echo $arr[project][start_time];?> - <? echo $arr[project][finish_time];?>)-->
+      
+      </span>
+      </td>
     </tr>
+    <?php
+    if($count_days == 7){
+    ?>
+    <tr>
+      <td   class="font-22"><strong>เวลาทำการ</strong></td>
+      <td>
+      <span class="font-22">
+    	<?php
+    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+    	$res[openanytime] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1 and open_always=1  ");
+    	$count_openanytime = $db->rows($res[openanytime]);
+    	
+    	if($count_openanytime > 0){
+    		
+    		$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+    		$res[openanytime2] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1 and open_always=0  ");
+    		$count_openanytime2 = $db->rows($res[openanytime2]);
+    		if($count_openanytime2 > 0){
+					$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+					$res[showtimeopen] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  order by id asc  ");
+					?>
+					<table width="100%">
+					<tr>
+						<td>วัน</td>
+						<td>เวลาเปิด</td>
+						<td>เวลาปิด</td>
+					</tr>
+					<?php
+					while($arr[showtimeopen] = $db->fetch($res[showtimeopen])){
+						?>
+					<tr>
+						<td><?=$arr[showtimeopen][product_day];?></td>
+						<?php
+						if($arr[showtimeopen][open_always] == 1){
+							?>
+							<td colspan="2"  >
+								เปิดตลาด 24 ชั่วโมง
+							</td>
+							
+							<?php
+						}else{
+							?>
+							<td><?=$arr[showtimeopen][start_h];?>:<?=$arr[showtimeopen][start_m];?></td>
+						<td><?=$arr[showtimeopen][finish_h];?>:<?=$arr[showtimeopen][finish_m];?></td>
+							<?php
+						}
+						?>
+						
+					</tr>
+					
+					<?php
+					}
+					?>
+					</table>
+					<?php
+ 
+				}else{
+					?>
+					เปิด 24 ชั่วโมง
+					<?php
+				}
+				?>
+				
+				<?php
+			}else{
+				$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+	    	$res[start_h] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by start_h ");
+	    	$count_start_h = $db->rows($res[start_h]);
+	    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+	    	$res[start_m] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by start_m ");
+	    	$count_start_m = $db->rows($res[start_m]);
+	    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+	    	$res[finish_h] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by finish_h ");
+	    	$count_finish_h = $db->rows($res[finish_h]);
+	    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+	    	$res[finish_m] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by finish_m ");
+	    	$count_finish_m = $db->rows($res[finish_m]);
+	    	$total_times = $count_start_h + $count_start_m + $count_finish_h + $count_finish_m;
+				if($total_times == 4){
+	    		$arr[start_h] = $db->fetch($res[start_h]);
+					?>
+					<? echo $arr[start_h][start_h];?>:<? echo $arr[start_h][start_m];?> - <? echo $arr[start_h][finish_h];?>:<? echo $arr[start_h][finish_m];?>
+					<?php
+				}else{
+					
+				}
+			}
+	    	
+    	?>      
+      </span>
+      </td>
+      </tr>
+    <?php } ?>
     <tr>
 <td class="font-22"><strong>ค่าตอบแทน</strong></td>
       <td><span id="shop_alert_menu_price_<?=$arr[project][id]?>" class="font-22"> <i class="fa fa-calculator" style="font-size:16px; color:<?=$arr[project][text_color]?>; width:20px;"></i>  ดูค่าตอบแทน</b></span></td>
