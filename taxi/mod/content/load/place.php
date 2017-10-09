@@ -1482,28 +1482,45 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   </table></td>
                  
                 </tr>
-                <tr>
-                  <td><strong></strong></td>
-                  <td>
-                  	
-                  	
-                  	<? foreach ($day as $value_d) { ?>
+                 <tr>
+                  
+                  <td colspan="2"> 
+                  	<table width="100%">
+                  		<tr>
+                  		<td width="23%"><label style="margin-bottom: -3px;" for="open_time_all">เปิด 24 ชม. ทุกวัน</label> </td>
+                  		<td><input type="checkbox" name="open_time_all" id="open_time_all" style="width: 20px;" /></td>
+                  		
+                  		<td width="20%"><label style="margin-bottom: -3px;" for="open_all">เปิดทำการทุกวัน</label> </td>
+
+                  		<td><input type="checkbox"  name="open_all" id="open_all" style="width: 20px;" /></td>
+                  		</tr>
+                  	</table>         	
+                  	<? foreach ($day as $value_d) { 
+                  	 
+                  	?>
+                  
                   	<table width="100%" >
                   		<tr>
-                  		<td width="15%"><label for="<?=$value_d;?>" style=" margin-bottom: -3px;"><?=$value_d;?></label></td>
-                  		<td width="15%"><input name="<?=$value_d;?>" id="<?=$value_d;?>" type="checkbox" class="checkbox-plan"  value="1" checked="checked" style="width: 20px;" /></td>
+                  		<td><label for="open_alway_<?=$value_d;?>" style="margin-bottom: -3px;">เปิด 24 ชม.</label></td>
+                  		<td><input type="checkbox" name="open_alway_<?=$value_d;?>" id="open_alway_<?=$value_d;?>"  value="1" onclick="eachOpenAlway('<?=$value_d;?>');"  style="width: 20px;"/></td>
+                  		<td width="15%" align="center"><label for="<?=$value_d;?>" style=" margin-bottom: -3px;"><?=$value_d;?></label></td>
+                  		<td width="15%">
+                  		<input name="<?=$value_d;?>" id="<?=$value_d;?>" type="checkbox" class="checkbox-plan"  value="1"  style="width: 20px;" /></td>
                   		<td>เปิด</td>
                   		<td>
                   		 <select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_open_<?=$value_d;?>" id="hour_open_<?=$value_d;?>">
-                  			<? foreach($hour as $value){ ?>
+                  			<? foreach($hour as $value){ 
                   				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  			?>
+                  				<option value="<?=$value?>" ><?=$value?></option>
                   		<?	 } ?>	
                   		</select> .
                   		<select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_open_<?=$value_d;?>" id="time_open_<?=$value_d;?>">
-                  			<? foreach($time as $value){ ?>
-                  				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  			<? foreach($time as $value){ 
+                  			
+								
+                  			?>
+                  				<option value="<?=$value?>" ><?=$value?></option>
                   		<?	 } ?>	
                   		</select> น.
                   		</td>
@@ -1511,20 +1528,24 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   		<td>ปิด</td>
                   		<td>
                   		 <select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_close_<?=$value_d;?>" id="hour_close_<?=$value_d;?>">
-                  			<? foreach($hour as $value){ ?>
+                  			<? foreach($hour as $value){ 
+                  				 ?>
                   				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  				<option value="<?=$value?>"  ><?=$value?></option>
                   		<?	 } ?>	
                   		</select> .
                   		<select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_close_<?=$value_d;?>" id="time_close_<?=$value_d;?>">
-                  			<? foreach($time as $value){ ?>
+                  			<? foreach($time as $value){ 
+                  			?>
                   				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  				<option value="<?=$value?>" ><?=$value?></option>
                   		<?	 } ?>	
                   		</select> น.
                   		</td>
                   		</tr>
-                  	</table> <? }?>
+                  	</table> 
+                 
+                  	<? }?>
                   	
                   </td>
                 </tr>
@@ -1532,8 +1553,75 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   <td>&nbsp;</td>
                   <td><button type="button" class="btn btn-primary btn-lg"   id="submit_data" > <span id="txt_btn_save2"> บันทึกข้อมูล </span> </button>
                     <script>
+   	$('#open_all').click(function(){
+   		var day = '<?=json_encode($day);?>';
+   		var obj_day = jQuery.parseJSON( day );
+   		if($(this).is(":checked")) {
+   			  $.each(obj_day, function( index, value ) {
+   			$('#'+value).prop('checked', true);
+   			});
+   		}else{
+			 $.each(obj_day, function( index, value ) {
+   			$('#'+value).prop('checked', false);
+   			});
+		}
+   	});
+
+
+    $('#open_time_all').click(function(){
+    var day = '<?=json_encode($day);?>';
+    var obj_day = jQuery.parseJSON( day );
+    var hour_open_default = $('#hour_open_default').val();
+  	var time_open_default = $('#time_open_default').val();
+	
+	var hour_close_default = $('#hour_close_default').val();
+  	var time_close_default = $('#time_close_default').val();		
+    	if($(this).is(":checked")) {
+            $.each(obj_day, function( index, value ) {
+			 	$('#open_alway_'+value).prop('checked', true);
+			 	
+			 	$('#hour_open_'+value).val('24');
+			 	$('#time_open_'+value).val('00');
+			 	
+			 	$('#hour_close_'+value).val('24');
+			 	$('#time_close_'+value).val('00');
+			 	
+			 	$('#hour_open_'+value).attr("disabled", true);
+			 	$('#hour_open_'+value).css("background-color", '#ddd');
+			 	$('#time_open_'+value).attr("disabled", true);
+			 	$('#time_open_'+value).css("background-color", '#ddd');
+			 	
+			 	$('#hour_close_'+value).attr("disabled", true);
+			 	$('#hour_close_'+value).css("background-color", '#ddd');
+			 	$('#time_close_'+value).attr("disabled", true);
+			 	$('#time_close_'+value).css("background-color", '#ddd');
+			});
+        }else{
+			$.each(obj_day, function( index, value ) {
+			 	$('#open_alway_'+value).prop('checked', false);
+			 	
+			 	$('#hour_open_'+value).val(hour_open_default);
+			 	$('#time_open_'+value).val(time_open_default);
+			 	
+			 	$('#hour_close_'+value).val(hour_close_default);
+			 	$('#time_close_'+value).val(time_close_default);
+			 	
+			 	$('#hour_open_'+value).attr("disabled", false);
+			 	$('#hour_open_'+value).css("background-color", '#fff');
+			 	$('#time_open_'+value).attr("disabled", false);
+			 	$('#time_open_'+value).css("background-color", '#fff');
+			 	
+			 	$('#hour_close_'+value).attr("disabled", false);
+			 	$('#hour_close_'+value).css("background-color", '#fff');
+			 	$('#time_close_'+value).attr("disabled", false);
+			 	$('#time_close_'+value).css("background-color", '#fff');
+			});
+		}
+        $('#open_time_all').val($(this).is(':checked'));   
+    });
+ 
   $('#default_time').click(function(){
-  	var day = '<?=json_encode($day);?>'
+  	   	var day = '<?=json_encode($day);?>';
   	var hour_open_default = $('#hour_open_default').val();
   	var time_open_default = $('#time_open_default').val();
 	
@@ -1542,16 +1630,68 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
 	
   	var obj_day = jQuery.parseJSON( day );
   	$.each(obj_day, function( index, value ) {
-	 	console.log(value+" : "+hour_open_default);
-	 	$('#hour_open_'+value).val(hour_open_default);
+  		if($('#open_alway_'+value).is(":checked")){
+			
+		}else{
+		$('#hour_open_'+value).val(hour_open_default);
 	 	$('#time_open_'+value).val(time_open_default);
 	 	
 	 	$('#hour_close_'+value).val(hour_close_default);
 	 	$('#time_close_'+value).val(time_close_default);
+		}
+	 	console.log(value+" : "+hour_open_default);
+	 	
 	 	
 	});
   	
-  });                  
+  });                                     
+      
+      function eachOpenAlway(day){
+      
+		  	if($('#open_alway_'+day).is(":checked")) {
+	        				 	
+				 	$('#hour_open_'+day).val('24');
+				 	$('#time_open_'+day).val('00');
+				 	
+				 	$('#hour_close_'+day).val('24');
+				 	$('#time_close_'+day).val('00');
+				 	
+				 	$('#hour_open_'+day).attr("disabled", true);
+				 	$('#hour_open_'+day).css("background-color", '#ddd');
+				 	$('#time_open_'+day).attr("disabled", true);
+				 	$('#time_open_'+day).css("background-color", '#ddd');
+				 	
+				 	$('#hour_close_'+day).attr("disabled", true);
+				 	$('#hour_close_'+day).css("background-color", '#ddd');
+				 	$('#time_close_'+day).attr("disabled", true);
+				 	$('#time_close_'+day).css("background-color", '#ddd');
+		        }else{
+	var hour_open_default = $('#hour_open_default').val();
+  	var time_open_default = $('#time_open_default').val();
+	
+	var hour_close_default = $('#hour_close_default').val();
+  	var time_close_default = $('#time_close_default').val();
+					$('#hour_open_'+day).val(hour_open_default);
+				 	$('#time_open_'+day).val(time_open_default);
+				 	
+				 	$('#hour_close_'+day).val(hour_close_default);
+				 	$('#time_close_'+day).val(time_close_default);
+				 	
+				 	$('#hour_open_'+day).attr("disabled", false);
+				 	$('#hour_open_'+day).css("background-color", '#fff');
+				 	$('#time_open_'+day).attr("disabled", false);
+				 	$('#time_open_'+day).css("background-color", '#fff');
+				 	
+				 	$('#hour_close_'+day).attr("disabled", false);
+				 	$('#hour_close_'+day).css("background-color", '#fff');
+				 	$('#time_close_'+day).attr("disabled", false);
+				 	$('#time_close_'+day).css("background-color", '#fff');
+				}
+	  }
+      
+  
+                    
+              
                     
   $("#submit_data").click(function(){
 	  
@@ -1589,7 +1729,7 @@ return false ;
 
  		 
   $.post('go.php?name=content/load&file=place&op=sub_add_action&id=<?=$_GET[id];?>&main=<?=$_GET[main];?>&sub=<?=$_GET[sub];?>',$('#myform').serialize(),function(response){
-  $('#div_send_data_msg').html(response);  
+//  $('#div_send_data_msg').html(response);  
   console.log(response);
   });
   
@@ -2111,34 +2251,58 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                 </tr>
                 <tr>
                   <td><strong>เวลาทำการ :</strong></td>
+                  <? $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+                  	$query_dayMon = $db->select_query("SELECT * FROM shopping_open_time where product_id = '".$arr[project][id]."' and product_day = 'Mon'   ");
+					$query_day_dtMon = $db->fetch($query_dayMon); 
+				  ?>
                   <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tbody>
                       <tr>
                         <td width="60">เปิด</td>
                         <td width="140">
                          <select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_open_default" id="hour_open_default">
-                  			<? foreach($hour as $value){ ?>
-                  				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  			<? foreach($hour as $value){ 
+                  				if($query_day_dtMon[start_h]==$value){
+									$selected = "selected";
+								}else{
+									$selected = "";
+								}
+                  			?>	
+                  				<option <?=$selected;?> value="<?=$value?>"><?=$value?></option>
                   		<?	 } ?>	
                   		</select> .
                   		<select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_open_default" id="time_open_default">
-                  			<? foreach($time as $value){ ?>
+                  			<? foreach($time as $value){ 
+                  			if($query_day_dtMon[start_m]==$value){
+									$selected = "selected";
+								}else{
+									$selected = "";
+								}?>
                   				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  				<option <?=$selected;?> value="<?=$value?>"><?=$value?></option>
                   		<?	 } ?>	
                   		</select> น.</td>
                         <td width="50">ปิด&nbsp;</td>
                         <td> <select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_close_default" id="hour_close_default">
-                  			<? foreach($hour as $value){ ?>
+                  			<? foreach($hour as $value){ 
+                  			if($query_day_dtMon[finish_h]==$value){
+									$selected = "selected";
+								}else{
+									$selected = "";
+								}?>
                   				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  				<option <?=$selected;?> value="<?=$value?>"><?=$value?></option>
                   		<?	 } ?>	
                   		</select> .
                   		<select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_close_default" id="time_close_default">
-                  			<? foreach($time as $value){ ?>
+                  			<? foreach($time as $value){ 
+                  			if($query_day_dtMon[finish_m]==$value){
+									$selected = "selected";
+								}else{
+									$selected = "";
+								}?>
                   				
-                  				<option value="<?=$value?>"><?=$value?></option>
+                  				<option <?=$selected;?> value="<?=$value?>"><?=$value?></option>
                   		<?	 } ?>	
                   		</select> น.</td>
 						 <td align="left"><button type="button" class="btn btn-md btn-info" id="default_time"><strong>ค่าเริ่มต้น</strong></button></td>
@@ -2148,24 +2312,55 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                  
                 </tr>
                 <tr>
-                  <td><strong></strong></td>
-                  <td>           	
+                  
+                  <td colspan="2"> 
+                  	<table width="100%">
+                  		<tr>
+                  		<td width="23%"><label style="margin-bottom: -3px;" for="open_time_all">เปิด 24 ชม. ทุกวัน</label> </td>
+                  		<td><input type="checkbox" name="open_time_all" id="open_time_all" style="width: 20px;" /></td>
+                  		
+                  		<td width="20%"><label style="margin-bottom: -3px;" for="open_all">เปิดทำการทุกวัน</label> </td>
+                  		<?  $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+                  			$num_day = $db->num_rows("shopping_open_time","id","product_id = '".$arr[project][id]."' and status = 1"); 
+                  			if($num_day>=7){
+								$checked =	'checked="checked"';
+								}
+                  		 ?>
+                  		<td><input type="checkbox" <?=$checked;?> name="open_all" id="open_all" style="width: 20px;" /></td>
+                  		</tr>
+                  	</table>         	
                   	<? foreach ($day as $value_d) { 
-                  	 $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-                  	 $query_day = $db->select_query("SELECT * FROM shopping_open_time where product_id = '".$arr[project][id]."' and product_day = '".$value_d."'   ");
+                  	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+                  	$query_day = $db->select_query("SELECT * FROM shopping_open_time where product_id = '".$arr[project][id]."' and product_day = '".$value_d."'   ");
 					$query_day_dt = $db->fetch($query_day);
 					if($query_day_dt[status] == 1){
 						$status_open = 'checked="checked"';
+					}else{
+						$status_open = '';
+					}
+					if($query_day_dt[open_always] == 1){
+						$status_open_24h = 'checked="checked"';
+						$disabled = 'disabled="disabled"';
+						$disabled_color = 'background-color : #ddd;';
+
+					}else{
+						$status_open_24h = '';
+						$disabled = '';
+						$disabled_color = '';
+
 					}
                   	?>
+                  
                   	<table width="100%" >
                   		<tr>
-                  		<td width="15%"><label for="<?=$value_d;?>" style=" margin-bottom: -3px;"><?=$value_d;?></label></td>
+                  		<td><label for="open_alway_<?=$value_d;?>" style="margin-bottom: -3px;">เปิด 24 ชม.</label></td>
+                  		<td><input type="checkbox" <?=$status_open_24h;?> name="open_alway_<?=$value_d;?>" id="open_alway_<?=$value_d;?>"  value="1" onclick="eachOpenAlway('<?=$value_d;?>');"  style="width: 20px;"/></td>
+                  		<td width="15%" align="center"><label for="<?=$value_d;?>" style=" margin-bottom: -3px;"><?=$value_d;?></label></td>
                   		<td width="15%">
                   		<input name="<?=$value_d;?>" id="<?=$value_d;?>" type="checkbox" class="checkbox-plan" <?=$status_open;?> value="1"  style="width: 20px;" /></td>
                   		<td>เปิด</td>
                   		<td>
-                  		 <select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_open_<?=$value_d;?>" id="hour_open_<?=$value_d;?>">
+                  		 <select  <?=$disabled;?> style="<?=$disabled_color;?>height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_open_<?=$value_d;?>" id="hour_open_<?=$value_d;?>">
                   			<? foreach($hour as $value){ 
                   				if($query_day_dt[start_h]==$value){
 									$selected = 'selected';
@@ -2176,7 +2371,7 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   				<option value="<?=$value?>" <?=$selected;?> ><?=$value?></option>
                   		<?	 } ?>	
                   		</select> .
-                  		<select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_open_<?=$value_d;?>" id="time_open_<?=$value_d;?>">
+                  		<select  <?=$disabled;?> style="<?=$disabled_color;?>height: 30px; border: 1px solid #ccc; border-radius: 2px;" name="time_open_<?=$value_d;?>" id="time_open_<?=$value_d;?>">
                   			<? foreach($time as $value){ 
                   			if($query_day_dt[start_m]==$value){
 									$selected = 'selected';
@@ -2191,7 +2386,7 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   		
                   		<td>ปิด</td>
                   		<td>
-                  		 <select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_close_<?=$value_d;?>" id="hour_close_<?=$value_d;?>">
+                  		 <select <?=$disabled;?> style="<?=$disabled_color;?>height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="hour_close_<?=$value_d;?>" id="hour_close_<?=$value_d;?>">
                   			<? foreach($hour as $value){ 
                   				if($query_day_dt[finish_h]==$value){
 									$selected = 'selected';
@@ -2202,7 +2397,7 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   				<option value="<?=$value?>" <?=$selected;?> ><?=$value?></option>
                   		<?	 } ?>	
                   		</select> .
-                  		<select style="height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_close_<?=$value_d;?>" id="time_close_<?=$value_d;?>">
+                  		<select  <?=$disabled;?> style="<?=$disabled_color;?>height: 30px; border: 1px solid #ccc;  border-radius: 2px;" name="time_close_<?=$value_d;?>" id="time_close_<?=$value_d;?>">
                   			<? foreach($time as $value){ 
                   			if($query_day_dt[finish_m]==$value){
 									$selected = 'selected';
@@ -2215,7 +2410,9 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   		</select> น.
                   		</td>
                   		</tr>
-                  	</table> <? }?>
+                  	</table> 
+                 
+                  	<? }?>
                   	
                   </td>
                 </tr>
@@ -2223,8 +2420,75 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
                   <td width="150">&nbsp;</td>
                   <td><button type="button" class="btn btn-primary btn-lg"   id="submit_data" > <span id="txt_btn_save3"> บันทึกข้อมูล </span></button>
                     <script>
- $('#default_time').click(function(){
-  	var day = '<?=json_encode($day);?>';
+   	$('#open_all').click(function(){
+   		var day = '<?=json_encode($day);?>';
+   		var obj_day = jQuery.parseJSON( day );
+   		if($(this).is(":checked")) {
+   			  $.each(obj_day, function( index, value ) {
+   			$('#'+value).prop('checked', true);
+   			});
+   		}else{
+			 $.each(obj_day, function( index, value ) {
+   			$('#'+value).prop('checked', false);
+   			});
+		}
+   	});
+
+
+    $('#open_time_all').click(function(){
+    var day = '<?=json_encode($day);?>';
+    var obj_day = jQuery.parseJSON( day );
+    var hour_open_default = $('#hour_open_default').val();
+  	var time_open_default = $('#time_open_default').val();
+	
+	var hour_close_default = $('#hour_close_default').val();
+  	var time_close_default = $('#time_close_default').val();		
+    	if($(this).is(":checked")) {
+            $.each(obj_day, function( index, value ) {
+			 	$('#open_alway_'+value).prop('checked', true);
+			 	
+			 	$('#hour_open_'+value).val('24');
+			 	$('#time_open_'+value).val('00');
+			 	
+			 	$('#hour_close_'+value).val('24');
+			 	$('#time_close_'+value).val('00');
+			 	
+			 	$('#hour_open_'+value).attr("disabled", true);
+			 	$('#hour_open_'+value).css("background-color", '#ddd');
+			 	$('#time_open_'+value).attr("disabled", true);
+			 	$('#time_open_'+value).css("background-color", '#ddd');
+			 	
+			 	$('#hour_close_'+value).attr("disabled", true);
+			 	$('#hour_close_'+value).css("background-color", '#ddd');
+			 	$('#time_close_'+value).attr("disabled", true);
+			 	$('#time_close_'+value).css("background-color", '#ddd');
+			});
+        }else{
+			$.each(obj_day, function( index, value ) {
+			 	$('#open_alway_'+value).prop('checked', false);
+			 	
+			 	$('#hour_open_'+value).val(hour_open_default);
+			 	$('#time_open_'+value).val(time_open_default);
+			 	
+			 	$('#hour_close_'+value).val(hour_close_default);
+			 	$('#time_close_'+value).val(time_close_default);
+			 	
+			 	$('#hour_open_'+value).attr("disabled", false);
+			 	$('#hour_open_'+value).css("background-color", '#fff');
+			 	$('#time_open_'+value).attr("disabled", false);
+			 	$('#time_open_'+value).css("background-color", '#fff');
+			 	
+			 	$('#hour_close_'+value).attr("disabled", false);
+			 	$('#hour_close_'+value).css("background-color", '#fff');
+			 	$('#time_close_'+value).attr("disabled", false);
+			 	$('#time_close_'+value).css("background-color", '#fff');
+			});
+		}
+        $('#open_time_all').val($(this).is(':checked'));   
+    });
+ 
+  $('#default_time').click(function(){
+  	   	var day = '<?=json_encode($day);?>';
   	var hour_open_default = $('#hour_open_default').val();
   	var time_open_default = $('#time_open_default').val();
 	
@@ -2233,16 +2497,65 @@ $arr[projectsub] = $db->fetch($res[projectsub]);
 	
   	var obj_day = jQuery.parseJSON( day );
   	$.each(obj_day, function( index, value ) {
-	 	console.log(value+" : "+hour_open_default);
-	 	$('#hour_open_'+value).val(hour_open_default);
+  		if($('#open_alway_'+value).is(":checked")){
+			
+		}else{
+		$('#hour_open_'+value).val(hour_open_default);
 	 	$('#time_open_'+value).val(time_open_default);
 	 	
 	 	$('#hour_close_'+value).val(hour_close_default);
 	 	$('#time_close_'+value).val(time_close_default);
+		}
+	 	console.log(value+" : "+hour_open_default);
+	 	
 	 	
 	});
   	
   });                                     
+      
+      function eachOpenAlway(day){
+      
+		  	if($('#open_alway_'+day).is(":checked")) {
+	        				 	
+				 	$('#hour_open_'+day).val('24');
+				 	$('#time_open_'+day).val('00');
+				 	
+				 	$('#hour_close_'+day).val('24');
+				 	$('#time_close_'+day).val('00');
+				 	
+				 	$('#hour_open_'+day).attr("disabled", true);
+				 	$('#hour_open_'+day).css("background-color", '#ddd');
+				 	$('#time_open_'+day).attr("disabled", true);
+				 	$('#time_open_'+day).css("background-color", '#ddd');
+				 	
+				 	$('#hour_close_'+day).attr("disabled", true);
+				 	$('#hour_close_'+day).css("background-color", '#ddd');
+				 	$('#time_close_'+day).attr("disabled", true);
+				 	$('#time_close_'+day).css("background-color", '#ddd');
+		        }else{
+	var hour_open_default = $('#hour_open_default').val();
+  	var time_open_default = $('#time_open_default').val();
+	
+	var hour_close_default = $('#hour_close_default').val();
+  	var time_close_default = $('#time_close_default').val();
+					$('#hour_open_'+day).val(hour_open_default);
+				 	$('#time_open_'+day).val(time_open_default);
+				 	
+				 	$('#hour_close_'+day).val(hour_close_default);
+				 	$('#time_close_'+day).val(time_close_default);
+				 	
+				 	$('#hour_open_'+day).attr("disabled", false);
+				 	$('#hour_open_'+day).css("background-color", '#fff');
+				 	$('#time_open_'+day).attr("disabled", false);
+				 	$('#time_open_'+day).css("background-color", '#fff');
+				 	
+				 	$('#hour_close_'+day).attr("disabled", false);
+				 	$('#hour_close_'+day).css("background-color", '#fff');
+				 	$('#time_close_'+day).attr("disabled", false);
+				 	$('#time_close_'+day).css("background-color", '#fff');
+				}
+	  }
+      
                     
   $("#submit_data").click(function(){
 
@@ -2279,16 +2592,16 @@ return false ;
  
  		 
   $.post('go.php?name=content/load&file=place&op=sub_edit_action&id=<?=$_GET[id];?>',$('#myform').serialize(),function(response){
-  $('#div_send_data_msg').html(response);  
+//  $('#div_send_data_msg').html(response);  
 console.log(response);
   });
   
 
-/*  var url_page_type= "empty_style.php?name=content/load&file=place&main=<? echo $arr[project][main];?>&sub=<? echo $arr[project][sub];?>";
+  var url_page_type= "empty_style.php?name=content/load&file=place&main=<? echo $arr[project][main];?>&sub=<? echo $arr[project][sub];?>";
 	  
   
  $('#show_data_page').load(url_page_type);
-	  */
+
 	  
   
   
@@ -2706,28 +3019,58 @@ $last_id = $row['Auto_increment']-1;
 
  		
  		foreach($day as $value){
- 			if($_POST[$value]==NULL or $_POST[$value]==""){
-				$status = 0;
-			}else{
-				$status = 1;
-			}
-//			$array_d[] = $_POST[$value];
-			$hour_open = 'hour_open_'.$value;
+ 			$hour_open = 'hour_open_'.$value;
 			$time_open = 'time_open_'.$value;
 			
 			$hour_close = 'hour_close_'.$value;
 			$time_close = 'time_close_'.$value;
 			
+			$open_alway = "open_alway_".$value;
+			
+ 			if($_POST[$value]==NULL or $_POST[$value]==""){
+				$status = 0;
+			}
+			else{
+				$status = 1;
+			}
+			
+			if($_POST[$open_alway]==NULL or $_POST[$open_alway]==""){
+				$status_alway = 0;
+			}else{
+				$status_alway = 1;
+			}
+			if($_POST[$hour_open]==NULL or $_POST[$hour_open]==""){
+				$hour_open_val = 00;
+			}else{
+				$hour_open_val = $_POST[$hour_open];
+			}
+			if($_POST[$time_open]==NULL or $_POST[$time_open]==""){
+				$time_open_val = 00;
+			}else{
+				$time_open_val = $_POST[$time_open];
+			}
+			if($_POST[$hour_close]==NULL or $_POST[$hour_close]==""){
+				$hour_close_val = 00;
+			}else{
+				$hour_close_val = $_POST[$hour_close];
+			}
+			if($_POST[$time_close]==NULL or $_POST[$time_close]==""){
+				$time_close_val = 00;
+			}else{
+				$time_close_val = $_POST[$time_close];
+			}
+			
 			$day_row['product_id'] = $last_id;
 			$day_row['product_day'] = $value;
 			$day_row['status'] = $status;
+			$day_row['open_always'] = $status_alway;
 			$day_row['type'] = 1;
-			$day_row['start_h'] = $_POST[$hour_open];
-			$day_row['start_m'] = $_POST[$time_open];
-			$day_row['finish_h'] = $_POST[$hour_close];
-			$day_row['finish_m'] = $_POST[$time_close];
-/*			echo json_encode($day_row);
-			echo "<br>";*/
+			$day_row['start_h'] = $hour_open_val;
+			$day_row['start_m'] = $time_open_val;
+			$day_row['finish_h'] = $hour_close_val;
+			$day_row['finish_m'] = $time_close_val;
+			echo json_encode($day_row);
+//			echo "<br>";
 			$db->add_db('shopping_open_time',$day_row);
 		}
 //		echo json_encode($array_d);
@@ -2839,26 +3182,56 @@ if($_POST[check_photo_id_book_3]==1){
 
  
  foreach($day as $value){
- 			if($_POST[$value]==NULL or $_POST[$value]==""){
-				$status = 0;
-			}else{
-				$status = 1;
-			}
-//			$array_d[] = $_POST[$value];
-			$hour_open = 'hour_open_'.$value;
+ 			$hour_open = 'hour_open_'.$value;
 			$time_open = 'time_open_'.$value;
 			
 			$hour_close = 'hour_close_'.$value;
 			$time_close = 'time_close_'.$value;
 			
+			$open_alway = "open_alway_".$value;
+			
+ 			if($_POST[$value]==NULL or $_POST[$value]==""){
+				$status = 0;
+			}
+			else{
+				$status = 1;
+			}
+			
+			if($_POST[$open_alway]==NULL or $_POST[$open_alway]==""){
+				$status_alway = 0;
+			}else{
+				$status_alway = 1;
+			}
+			if($_POST[$hour_open]==NULL or $_POST[$hour_open]==""){
+				$hour_open_val = 00;
+			}else{
+				$hour_open_val = $_POST[$hour_open];
+			}
+			if($_POST[$time_open]==NULL or $_POST[$time_open]==""){
+				$time_open_val = 00;
+			}else{
+				$time_open_val = $_POST[$time_open];
+			}
+			if($_POST[$hour_close]==NULL or $_POST[$hour_close]==""){
+				$hour_close_val = 00;
+			}else{
+				$hour_close_val = $_POST[$hour_close];
+			}
+			if($_POST[$time_close]==NULL or $_POST[$time_close]==""){
+				$time_close_val = 00;
+			}else{
+				$time_close_val = $_POST[$time_close];
+			}
 			$day_row['product_id'] = $last_id;
 			$day_row['product_day'] = $value;
 			$day_row['status'] = $status;
+			$day_row['open_always'] = $status_alway;
 			$day_row['type'] = 1;
-			$day_row['start_h'] = $_POST[$hour_open];
-			$day_row['start_m'] = $_POST[$time_open];
-			$day_row['finish_h'] = $_POST[$hour_close];
-			$day_row['finish_m'] = $_POST[$time_close];
+			
+			$day_row['start_h'] = $hour_open_val;
+			$day_row['start_m'] = $time_open_val;
+			$day_row['finish_h'] = $hour_close_val;
+			$day_row['finish_m'] = $time_close_val;
 			
 
 			$num_row = $db->num_rows("shopping_open_time","id","product_id ='".$last_id."' and product_day = '".$value."' "); 
@@ -2867,8 +3240,10 @@ if($_POST[check_photo_id_book_3]==1){
 			}else{
 				$db->update_db('shopping_open_time',$day_row,"product_id ='".$last_id."' and product_day = '".$value."' ");
 			}
-			echo json_encode($num_row);
+			echo json_encode($day_row);
 		}
+ 
+ 
  
 
 if($_POST[check_photo_id_logo]==1){ 
