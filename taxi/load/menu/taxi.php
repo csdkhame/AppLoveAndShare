@@ -345,12 +345,13 @@ $( "#load_mod_popup" ).toggle();
             <li ><a id="slide_menu_user_profile" ><i class="fa fa-circle-o" ></i><span  class="textsub-left-menu-slide">ข้อมูลส่วนตัว</span></a></li>
 			
 			<li ><a id="slide_menu_user_job" ><i class="fa fa-circle-o" ></i><span  class="textsub-left-menu-slide">ข้อมูลและเอกสารสำคัญ</span></a></li>
+			<!--mod/user/croppic_master/test.php href="mod/user/croppic_master/test.php"-->
+			<li><a id="slide_menu_upload_users" href="mod/user/croppic_master/test.php?user=<?=$arr[web_user][username];?>"><i class="fa fa-circle-o" ></i><span  class="textsub-left-menu-slide">เปลี่ยนภาพประจำตัว</span></a></li>
 					<? if(1==0){ ?>	
 			<li><a href="?name=user&file=network"><i class="fa fa-circle-o"></i><span  class="textsub-left-menu-slide">ข้อมูลการติดต่อสื่อสาร</span></a></li>
          
 			<li><a href="?name=user&file=phone"><i class="fa fa-circle-o"></i><span  class="textsub-left-menu-slide">เบอร์โทรศัพท์ส่วนตัว</span></a></li>
 		
-			<li><a href="?name=user&file=pic"><i class="fa fa-circle-o" ></i><span  class="textsub-left-menu-slide">เปลี่ยนภาพประจำตัว</span></a></li>
 		
 			<li><a href="?name=user&file=password"><i class="fa fa-circle-o"></i><span  class="textsub-left-menu-slide">เปลี่ยนรหัสผ่าน</span></a></li>
 			 
@@ -362,11 +363,8 @@ $( "#load_mod_popup" ).toggle();
 			<? } ?>
           </ul>
         </li>
-        
-        
-        
-        
-        <script>
+
+ <script>
  
 $('#slide_menu_user_profile').click(function(){  
  
@@ -377,7 +375,19 @@ $( "#load_mod_popup" ).toggle();
  $('#load_mod_popup').html(load_main_mod);
   $('#load_mod_popup').load(url_load); 
  
- 	});
+ });
+ 
+$('#slide_menu_upload_user').click(function(){  
+ 
+$( "#load_mod_popup" ).toggle();
+ 
+//  var url_load = "load_page_mod.php?name=user&file=upload_pic";
+  var url_load = "load_page_mod.php?name=user/cropit_master/&file=background";
+ 
+ $('#load_mod_popup').html(load_main_mod);
+  $('#load_mod_popup').load(url_load); 
+ 
+ });
 	
 	
 	

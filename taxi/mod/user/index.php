@@ -85,9 +85,9 @@
     filter: alpha(opacity=0);
 }
 </style> 
-<div align="center" >
+<div align="center" style="margin-top:10px;" >
 <img src="<?=$path_file;?>" id="img_tag"  alt="Preview Image" width="200px" style="border: 2px solid #ddd;    border-radius: 4px;    padding: 0px;    margin: 10px;   display: nones;"/>
-<button class="btn btn-md" id="but_img_tag" type="button">อัพโหลดภาพ..</button>
+<!--<button class="btn btn-md" id="but_img_tag" type="button">อัพโหลดภาพ..</button>-->
  <input type="file" id="imageUpload_profile" class="fileInput" name="imageUpload_profile" />
 
 </div>
@@ -217,12 +217,12 @@
 
  <script>
 
-	$('#img_tag').click(function(){
+	/*$('#img_tag').click(function(){
 		$('#imageUpload_profile').trigger('click');
 	});
 	$('#but_img_tag').click(function(){
 		$('#imageUpload_profile').trigger('click');
-	});
+	});*/
 	
 
  $('#imageUpload_profile').change(function(){			

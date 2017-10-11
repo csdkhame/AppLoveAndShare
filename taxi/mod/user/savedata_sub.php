@@ -88,4 +88,19 @@ if (copy($_FILES["file"]["tmp_name"], $target_file)) {
         
         echo json_encode($result);
 }
+
+if($_GET[type]=="upload_img"){
+	
+$target_dir = "../../../data/pic/driver/small/";
+$target_file = $target_dir ."123.jpg";
+
+if (copy($_FILES["file"]["tmp_name"], $target_file)) {
+//	    	$file_idcard = $_FILES["file"]["name"];
+	    	$check_pic_card = 1;
+	    	$check = 1;
+	    } else {
+			$check_pic_card = 0;
+	    }	
+echo 	    $target_file." ++++ ".$_FILES["file"]["name"];
+}
 ?> 
