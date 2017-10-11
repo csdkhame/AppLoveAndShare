@@ -19,6 +19,7 @@
 				cursor: -webkit-grab;
 				cursor: grab;
 				height: 265px!important;
+				top: 15px !important;
 			}
 			.cropImgWrapper:active{
 				cursor: -webkit-grabbing;

@@ -116,7 +116,7 @@
 			var that = this;
 			
 			var cropControlUpload = '';
-			if(that.options.customUploadButtonId ===''){ cropControlUpload = '<i class="cropControlUpload"></i>'; }
+			if(that.options.customUploadButtonId ===''){ cropControlUpload = '<i class="cropControlUpload"> ></i>'; }
 			var cropControlRemoveCroppedImage = '<i class="cropControlRemoveCroppedImage"></i>';
 			
 			if( $.isEmptyObject(that.croppedImg)){ cropControlRemoveCroppedImage=''; }

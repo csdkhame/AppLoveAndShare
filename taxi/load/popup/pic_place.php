@@ -1,7 +1,8 @@
 <!--<link href="1/ninja-slider.css" rel="stylesheet" type="text/css" />
     <script src="1/ninja-slider.js" type="text/javascript"></script>-->
-    <link href="load/popup/1/ninja-slider.css" rel="stylesheet" type="text/css" />
-    <script src="load/popup/1/ninja-slider.js" type="text/javascript"></script>
+    <link href="load/popup/1/ninja-slider.css?v=<?=time();?>" rel="stylesheet" type="text/css" />
+    <script src="load/popup/1/ninja-slider.js?v=<?=time();?>" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <style>
         
         a {color:#1155CC;}
@@ -11,6 +12,9 @@
 <? 
 $id = $_GET[id];
  ?>
+ <div style="
+    font-size: 0px!important; color: #000000 !important;
+">
 <!--<div class="css-full-popup"  id="alert_show_pic_place" style="display:none; position:fixed; overflow-y: auto ;overflow-x: none ; padding:0px; margin-top:45px; "> 
  
 <div class="back-full-popup"> 
@@ -56,7 +60,7 @@ $id = $_GET[id];
     </div>
     <!--end-->
 <!-- </div> --> 
- 
+ </div>
  <script>
 $(".button-close-popup-pic-place").click(function(){   
  
@@ -65,4 +69,5 @@ $(".button-close-popup-pic-place").click(function(){
  $( "#alert_show_pic_place" ).hide();
  
   });
+ 
  </script>

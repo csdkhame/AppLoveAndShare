@@ -90,17 +90,23 @@ if (copy($_FILES["file"]["tmp_name"], $target_file)) {
 }
 
 if($_GET[type]=="upload_img"){
-	
+	$pic_qr = file_exists("croppic_master/temp/".$_GET[user].".jpg");  
 $target_dir = "../../../data/pic/driver/small/";
-$target_file = $target_dir ."123.jpg";
+$target_file = $target_dir . $_GET[user].".jpg";
 
-if (copy($_FILES["file"]["tmp_name"], $target_file)) {
-//	    	$file_idcard = $_FILES["file"]["name"];
-	    	$check_pic_card = 1;
-	    	$check = 1;
+if (copy("croppic_master/temp/".$_GET[user].".jpg", $target_file)) {
+			$result = 1;
 	    } else {
-			$check_pic_card = 0;
-	    }	
-echo 	    $target_file." ++++ ".$_FILES["file"]["name"];
+			$result = 0;
+	    }
+//echo 	    $target_file." ++++ ".$_FILES["file"]["name"];
+
+	if($pic_qr==1){
+		
+	}else{
+		$result = 0;
+	}
+
+echo 	    $result;
 }
 ?> 

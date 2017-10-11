@@ -510,15 +510,25 @@ $time_of_open = "".$arr[shop][start_h].".".$arr[shop][start_m]." - ".$arr[shop][
 
 </div> 
  
- <div id="myModal" class="modal">
-  <span class="close">&times;</span>
+ <div id="broModal" class="modal" style="font-size: 0px!important; color: #000000 !important;">
+  <span class="close" style="position: fixed;
+    color: #f4f4f4;
+    right: 15px;
+    font-size: 40px;
+   " id="closeModal">&times;</span>
+   <i class="fa fa-times" aria-hidden="true" style="position: fixed;
+    color: #f4f4f4;
+    right: 15px;
+    font-size: 40px;
+    z-index: 5000;
+   " id="close_modal" onclick="closeModal();"></i>
   <div class="modal-content" id="img01"> </div>
   <!--<div id="caption"></div>-->
 </div>
  
  <script>
 // Get the modal
-var modal = document.getElementById('myModal');
+var modal = document.getElementById('broModal');
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
 var img = document.getElementById('shop_alert_menu_index_load_<?=$arr[project][id]?>');
@@ -529,7 +539,7 @@ function openPopUpBrochure(id,pic1,pic2,pic3){
 //    modalImg.src = this.src;
 	
 	$('#img01').load('load/popup/pic_place.php?id='+id+'&pic1='+pic1+'&pic2='+pic2+'&pic3='+pic3); 
-    captionText.innerHTML = this.alt;
+//    captionText.innerHTML = this.alt;
 }
 
 // Get the <span> element that closes the modal
@@ -538,6 +548,10 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() { 
     modal.style.display = "none";
+}
+function closeModal(){
+//	alert(123);
+	 $('#closeModal').click();
 }
 </script>
  
