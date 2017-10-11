@@ -3,7 +3,20 @@
  $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
 $res[projecttype] = $db->select_query("SELECT * FROM shopping_product_sub where   id=".$_GET[type]."  ");
 $arr[projecttype] = $db->fetch($res[projecttype]);
- 
+
+
+
+$ArrDayName[Sun] = 'อาทิตย์';
+$ArrDayName[Mon] = 'จันทร์';
+$ArrDayName[Tue] = 'อังคาร';
+$ArrDayName[Wed] = 'พุธ';
+$ArrDayName[Thu] = 'พฤหัสบดี';
+$ArrDayName[Fri] = 'ศุกร์';
+$ArrDayName[Sat] = 'เสาร์';
+
+
+
+ $day_now =  date('D');
  ?>
  
  <script>
@@ -81,36 +94,64 @@ $count_days = $db->rows($res[opentime]);
 				<?php
 			}else{
 				?>
-				<table width="100%">
+				<table width="100%" cellpadding="0" cellspacing="0">
 					<tr>
-						<td>วัน</td>
-						<td>เวลาเปิด</td>
-						<td>เวลาปิด</td>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0; ">วัน</td>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;">เวลาเปิด</td>
+						<td style="border-bottom: 1px dotted #abaab0; ">เวลาปิด</td>
 					</tr>
 				
 				<?php
 				$i = 1;
 				while($arr[opentime] = $db->fetch($res[opentime])){
-					?>
-					<tr>
-						<td><?=$arr[opentime][product_day];?></td>
+					
+					if($arr[opentime][product_day] == $day_now){
+						?>
+						<tr>
+						<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #ff6464;  border-top:1px dotted #ff6464; border-left:1px dotted #ff6464;"><?=$ArrDayName[$arr[opentime][product_day]];?></td>
 						<?php
 						if($arr[opentime][open_always] == 1){
 							?>
-							<td colspan="2"  >
-								เปิดตลาด 24 ชั่วโมง
+							<td colspan="2" style="border-bottom: 1px dotted #ff6464;border-right:1px dotted #ff6464; border-top:1px dotted #ff6464;" >
+								เปิดตลอด 24 ชั่วโมง
 							</td>
 							
 							<?php
 						}else{
 							?>
-							<td><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
-						<td><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
+							<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #abaab0; border-top:1px dotted #ff6464;"><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+							<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #ff6464; border-top:1px dotted #ff6464;" ><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
 							<?php
 						}
 						?>
 						
 					</tr>
+						<?php
+					}else{
+						?>
+						<tr>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;"><?=$ArrDayName[$arr[opentime][product_day]];?></td>
+						<?php
+						if($arr[opentime][open_always] == 1){
+							?>
+							<td colspan="2" style="border-bottom: 1px dotted #abaab0;" >
+								เปิดตลอด 24 ชั่วโมง
+							</td>
+							
+							<?php
+						}else{
+							?>
+							<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;"><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+							<td style="border-bottom: 1px dotted #abaab0;"><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
+							<?php
+						}
+						?>
+						
+					</tr>
+						<?php
+					}
+					?>
+					
 					
 					<?php
 					$i++;
@@ -146,44 +187,75 @@ $count_days = $db->rows($res[opentime]);
 					$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
 					$res[showtimeopen] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  order by id asc  ");
 					?>
-					<table width="100%">
+					<table width="100%" cellpadding="0" cellspacing="0">
 					<tr>
-						<td>วัน</td>
-						<td>เวลาเปิด</td>
-						<td>เวลาปิด</td>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0; ">วัน</td>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;">เวลาเปิด</td>
+						<td style="border-bottom: 1px dotted #abaab0; ">เวลาปิด</td>
 					</tr>
-					<?php
-					while($arr[showtimeopen] = $db->fetch($res[showtimeopen])){
+				
+				<?php
+				$i = 1;
+				while($arr[opentime] = $db->fetch($res[opentime])){
+					
+					if($arr[opentime][product_day] == $day_now){
 						?>
-					<tr>
-						<td><?=$arr[showtimeopen][product_day];?></td>
+						<tr>
+						<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #ff6464;  border-top:1px dotted #ff6464; border-left:1px dotted #ff6464;"><?=$ArrDayName[$arr[opentime][product_day]];?></td>
 						<?php
-						if($arr[showtimeopen][open_always] == 1){
+						if($arr[opentime][open_always] == 1){
 							?>
-							<td colspan="2"  >
+							<td colspan="2" style="border-bottom: 1px dotted #ff6464;border-right:1px dotted #ff6464; border-top:1px dotted #ff6464;" >
 								เปิดตลาด 24 ชั่วโมง
 							</td>
 							
 							<?php
 						}else{
 							?>
-							<td><?=$arr[showtimeopen][start_h];?>:<?=$arr[showtimeopen][start_m];?></td>
-						<td><?=$arr[showtimeopen][finish_h];?>:<?=$arr[showtimeopen][finish_m];?></td>
+							<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #abaab0; border-top:1px dotted #ff6464;"><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+							<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #ff6464; border-top:1px dotted #ff6464;" ><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
 							<?php
 						}
 						?>
 						
 					</tr>
-					
-					<?php
+						<?php
+					}else{
+						?>
+						<tr>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;"><?=$ArrDayName[$arr[opentime][product_day]];?></td>
+						<?php
+						if($arr[opentime][open_always] == 1){
+							?>
+							<td colspan="2" style="border-bottom: 1px dotted #abaab0;" >
+								เปิดตลอด 24 ชั่วโมง
+							</td>
+							
+							<?php
+						}else{
+							?>
+							<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;"><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+							<td style="border-bottom: 1px dotted #abaab0;"><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
+							<?php
+						}
+						?>
+						
+					</tr>
+						<?php
 					}
 					?>
-					</table>
+					
+					
+					<?php
+					$i++;
+				}
+				?>
+				</table>
 					<?php
  
 				}else{
 					?>
-					เปิด 24 ชั่วโมง
+					เปิดตลอด 24 ชั่วโมง
 					<?php
 				}
 				?>
@@ -209,7 +281,72 @@ $count_days = $db->rows($res[opentime]);
 					<? echo $arr[start_h][start_h];?>:<? echo $arr[start_h][start_m];?> - <? echo $arr[start_h][finish_h];?>:<? echo $arr[start_h][finish_m];?>
 					<?php
 				}else{
+					?>
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0; ">วัน</td>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;">เวลาเปิด</td>
+						<td style="border-bottom: 1px dotted #abaab0; ">เวลาปิด</td>
+					</tr>
+				
+				<?php
+				$i = 1;
+				while($arr[opentime] = $db->fetch($res[opentime])){
 					
+					if($arr[opentime][product_day] == $day_now){
+						?>
+						<tr>
+						<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #ff6464;  border-top:1px dotted #ff6464; border-left:1px dotted #ff6464;"><?=$ArrDayName[$arr[opentime][product_day]];?></td>
+						<?php
+						if($arr[opentime][open_always] == 1){
+							?>
+							<td colspan="2" style="border-bottom: 1px dotted #ff6464;border-right:1px dotted #ff6464; border-top:1px dotted #ff6464;" >
+								เปิดตลอด 24 ชั่วโมง
+							</td>
+							
+							<?php
+						}else{
+							?>
+							<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #abaab0; border-top:1px dotted #ff6464;"><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+							<td style="border-bottom: 1px dotted #ff6464; border-right:1px dotted #ff6464; border-top:1px dotted #ff6464;" ><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
+							<?php
+						}
+						?>
+						
+					</tr>
+						<?php
+					}else{
+						?>
+						<tr>
+						<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;"><?=$ArrDayName[$arr[opentime][product_day]];?></td>
+						<?php
+						if($arr[opentime][open_always] == 1){
+							?>
+							<td colspan="2" style="border-bottom: 1px dotted #abaab0;" >
+								เปิดตลอด 24 ชั่วโมง
+							</td>
+							
+							<?php
+						}else{
+							?>
+							<td style="border-bottom: 1px dotted #abaab0; border-right:1px dotted #abaab0;"><?=$arr[opentime][start_h];?>:<?=$arr[opentime][start_m];?></td>
+							<td style="border-bottom: 1px dotted #abaab0;"><?=$arr[opentime][finish_h];?>:<?=$arr[opentime][finish_m];?></td>
+							<?php
+						}
+						?>
+						
+					</tr>
+						<?php
+					}
+					?>
+					
+					
+					<?php
+					$i++;
+				}
+				?>
+				</table>
+				<?php
 				}
 			}
 	    	
@@ -343,9 +480,23 @@ $count_days = $db->rows($res[opentime]);
       
       
        <div id="btn_close_<? echo $arr[project][id];?>" style=" display:none">
-      
+<?php
+
+ 	  $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+  $res[shop] = $db->select_query("SELECT * FROM  shopping_open_time where product_id=".$arr[project][id]." and product_day = '$day_now'     ");
+ $arr[shop] = $db->fetch($res[shop]) ;
+if($arr[shop][open_always] == 1){
+$finish_h =  "23";
+$finish_m =  "59";
+$time_of_open = "00.00 - 23.59";
+}else{
+$finish_h =  $arr[shop][finish_h];
+$finish_m =  $arr[shop][finish_m];
+$time_of_open = "".$arr[shop][start_h].".".$arr[shop][start_m]." - ".$arr[shop][finish_h].".".$arr[shop][finish_m]."";
+}
+?>      
             <button id="menu_close_new_booking_text_<? echo $arr[project][id];?>" type="button" class="btn  btn-info "  style="width:100%;text-align:center;padding:5px; background-color:#666666; border:none; display:nones "><span class="font-30"> <b>  เปิดให้บริการ<br>
-เวลา  <? echo $arr[project][start_time];?> - <? echo $arr[project][finish_time];?></button>
+เวลา  <? echo $time_of_open; ?></button>
         </div>
       
       
