@@ -154,15 +154,15 @@ $( "#child_number" ).addClass('border-alert');
  
  
  border: 0px solid #ddd;  
- background:<? echo $bgcolor; ?>; margin-bottom:0px; box-shadow: 0px  0px 5px #DADADA; margin-top: 0px; margin-top:-10px;"    >
+ background:<? echo $bgcolor; ?>; margin-bottom:0px; box-shadow: 0px  0px 0px #DADADA; margin-top: 0px; margin-top:-10px;"    >
               <table width="100%" border="0" cellspacing="0" cellpadding="2"   id="div_car_<?=$arr[projectcar][id]?>2">
                 <tbody>
                   <tr>
                     <td valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1">
                       <tbody>
                         <tr>
-                          <td width="80" class="font-22"><strong>ทะเบียน :</strong></td>
-                          <td class="font-22"><b><? echo $arr[projectcar][plate_num];?>&nbsp;<? echo $arr[projectcar][province];?></td>
+                          <td width="90"  class="font-26 "><strong>ทะเบียน </strong></td>
+                          <td  class="font-26 "> <? echo $arr[projectcar][plate_num];?>&nbsp;<? echo $arr[projectcar][province];?></td>
                           </tr>
                         </tbody>
                     </table></td>
@@ -295,4 +295,4 @@ $('#load_mod_popup_4').html(load_main_mod);
 <br>
 <br>
 <br> 
-s
+ 

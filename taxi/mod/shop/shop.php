@@ -69,7 +69,7 @@ while($arr[project] = $db->fetch($res[project])){
       
       <? } ?>
         
-         <b>  <span class="font-28" style="color:<?=$main_color?>"><? echo $arr[project][topic_th];?>  (ภูเก็ต)</span><br>
+         <b>  <span class="font-28" style="color:<?=$main_color?>"><? echo $arr[project][topic_th];?> </span><br>
         <span class="font-28" style="color:#333333"><b><? echo $arr[project][topic_en];?></span>  
         
         
@@ -397,7 +397,7 @@ $count_days = $db->rows($res[opentime]);
   
  	  $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
                          
-  $res[sale] = $db->select_query("SELECT * FROM  shopping_contact where product_id=".$arr[project][id]." and type='phone'  and usertype='sale'  ORDER BY id  ");
+  $res[sale] = $db->select_query("SELECT * FROM  shopping_contact where product_id=".$arr[project][id]." and type='phone'  and usertype=9 ORDER BY id  ");
                       
  	while($arr[sale] = $db->fetch($res[sale])){  
 	
@@ -408,7 +408,8 @@ $count_days = $db->rows($res[opentime]);
       
        <a href="tel:<?=$arr[sale][phone]?>"  id="booking_edit_<?=$arr[project][id]?>"  style="color:#333333"  >
       
-<span id="shop_alert_menu_call_<?=$arr[project][id]?>" class="font-22"> <i class="fa fa-phone-square" style="font-size:18px; color:<?=$arr[project][text_color]?>; width:20px;"></i>การตลาด (<?=$arr[sale][name]?>)</b></span></a>
+<span id="shop_alert_menu_call_<?=$arr[project][id]?>" class="font-22"> <i class="fa fa-phone-square" style="font-size:18px; color:<?=$arr[project][text_color]?>; width:20px;"></i>การตลาด (<?=$arr[sale][name]?>)</b></span>
+</a>
 
 
 <? } ?>

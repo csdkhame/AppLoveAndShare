@@ -1,4 +1,8 @@
 
+
+
+
+
 <style>
   .mynumber{
   
@@ -215,12 +219,7 @@ $("#number_<?=$arr[news][id] ?>").click(function(){
 
 
 
-
-
-
-
-
-
+ 
 
  
   $('#time_number').html('<?=$arr[news][name] ?>');
@@ -263,9 +262,7 @@ $("#number_<?=$arr[news][id] ?>").click(function(){
        </script>         
                 
                 
-                
-                
-                
+ 
                 <div class="mynumber" id="number_<?=$arr[news][id] ?>" >
                 
                 
