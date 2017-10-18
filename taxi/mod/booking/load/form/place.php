@@ -14,6 +14,31 @@
 		$arr[shop] = $db->fetch($res[shop]);
 
 
+
+ $day_now =  date('D');
+ 	  $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
+  $res[shop_time] = $db->select_query("SELECT * FROM  shopping_open_time where product_id=".$arr[project][program]." and product_day = '$day_now'     ");
+ $arr[shop_time] = $db->fetch($res[shop_time]) ;
+if($arr[shop_time][open_always] == 1){
+$start_h =  "00";
+$start_m =  "00";
+$finish_h =  "23";
+$finish_m =  "59";
+$arr[shop][start_time] = $start_h.":".$start_m;
+$arr[shop][finish_time] = $finish_h.":".$finish_m;
+$time_show_open = "เปิดตลอด 24 ชั่วโมง";
+}else{
+$start_h =  $arr[shop_time][start_h];
+$start_m =  $arr[shop_time][start_m];
+$finish_h =  $arr[shop_time][finish_h];
+$finish_m =  $arr[shop_time][finish_m];
+$arr[shop][start_time] = $start_h.":".$start_m;
+$arr[shop][finish_time] = $finish_h.":".$finish_m;
+
+$time_show_open = $arr[shop][start_time]." - ".$arr[shop][finish_time];
+}
+
+
 ?>
 
 
@@ -39,7 +64,7 @@
       </td>
     </tr>
     <tr>
- <td class="font-24"><i class="fa  fa-clock-o" style="width:20px; color:#999999"  ></i><b><? echo $arr[shop][start_time];?> -  <? echo $arr[shop][finish_time];?></td>
+ <td class="font-24"><i class="fa  fa-clock-o" style="width:20px; color:#999999"  ></i><b><? echo $time_show_open;?></td>
     </tr>
   </tbody>
 </table> 
