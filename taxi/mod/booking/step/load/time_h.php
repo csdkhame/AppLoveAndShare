@@ -39,7 +39,7 @@
 	}
 </style>
 <script>
-	$(".text-topic-action-mod-4" ).html("นาฬิกา");
+	$(".text-topic-action-mod-4" ).html("ชั่วโมง");
 	$(".mynumber").removeClass("mynumber-active");
 	$("#number_<?=$_GET[id]?>").addClass("mynumber-active");
 </script>

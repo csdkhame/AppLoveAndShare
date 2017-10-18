@@ -150,12 +150,12 @@
 																<tbody>
 																	<tr>
 																		<td width="50%" align="center">
-																			<div class="topicname"><center>นาฬิกา</div>
-																			<div name="time_h_number" id="time_h_number" style="width:100%; font-size:40px;padding-top:5px;  height:60px; font-weight:bold" class="border-alert" ><?=date('h')?></div>
+																			<div class="topicname"><center>ชั่วโมง</div>
+																			<div name="time_h_number" id="time_h_number" style="width:100%; font-size:40px;padding-top:5px;  height:60px; font-weight:bold" class="border-alert" >เลือก</div>
 																		</td>
 																		<td width="50%" align="center">
 																			<div class="topicname"><center>นาที</div>
-																			<div name="time_m_number" id="time_m_number" style="width:100%; font-size:40px; padding-top:5px; height:60px; font-weight:bold" class="border-alert" ><?=date('i')?></div>
+																			<div name="time_m_number" id="time_m_number" style="width:100%; font-size:40px; padding-top:5px; height:60px; font-weight:bold" class="border-alert" >เลือก</div>
 																		</td>
 																	</tr>
 																</tbody>
@@ -191,28 +191,8 @@
 			</table>
 		</div>
 	</div>
-	<div class="<?= $coldata?>" id="show_transfer_detail" style="margin-top:20px;padding:5px;   border-radius: 10px; border: 1px solid #ddd;background-color:#Fff;  margin-bottom: 0px; box-shadow: 0px  0px 5px #DADADA  ; display:nones  ">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-			<tbody>
-				<tr>
-					<td><div class="font-28" style="color:<?=$main_color?>"><b>ข้อมูลรถรับส่ง</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div style="margin-top:-50px;" id="show_car_detail">
-			<?   include ("mod/booking/load/booking/car.php");   ?>
-		</div>
-		<table width="100%"  border="0" cellspacing="0" cellpadding="0" id="button_show_car_detail" style="display:none">
-			<tr >
-				<td width="100%"  style="display:none" ><button type="button"  id="back_booking_step_2" class="btn btn-block btn-default"  style="width:100%px "><span class="font-28"><i class="    fa fa-chevron-circle-left"></i>&nbsp;ย้อนกลับ</button></td>
-				<td width="100%"  >
-					<div class="border-alert"  id="div_submit_booking_step_2"  style="width:100%; display:none ">
-						<button id="submit_booking_step_2" type="button" class="btn  btn-primary" style="width:100% "><span class="font-28"><i class="    fa fa-chevron-circle-right"></i>&nbsp;ขั้นตอนต่อไป</button></div>
-				</td>
-			</tr>
-		</table>
-	</div>
+
+<!-- DIV PAX -->	
 	<div class="<?= $coldata?>" id="show_guest_detail" style="margin-top:20px;padding:5px;   border-radius: 10px; border: 1px solid #ddd;background-color:#Fff;  margin-bottom: 0px; box-shadow: 0px  0px 5px #DADADA  ; display:nones ">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 			<tbody>
@@ -244,6 +224,7 @@
 			</div>
 		</div>
 	</div>
+<!-- Agent Issu -->	
 	<div class="<?= $coldata?>" id="show_payment_detail" style="margin-top:20px;padding:5px;   border-radius: 10px; border: 1px solid #ddd;background-color:#Fff;  margin-bottom: 0px; box-shadow: 0px  0px 5px #DADADA  ; display:nones ">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 			<tbody>
@@ -256,18 +237,30 @@
 			<table width="100%" border="0" cellspacing="1" cellpadding="5" style="margin-top:-5px;">
 				<tbody>
 					<tr>
-						<td width="100%"><select  class="form-control" name="price_plan" id="price_plan" style="width:100%; font-size:16px; padding:5px; height:40px" >
-								<option value="">- เลือกประเภทค่าตอบแทน -</option>
+						<td width="100%">
+						<style>
+							.label_price_plan{
+								vertical-align:top;padding:5px;margin: 4px;
+							}
+						</style>
+						
+						<!--<select  class="form-control" name="price_plan" id="price_plan" style="width:100%; font-size:16px; padding:5px; height:40px" >-->
+								<!--<option value="">- เลือกประเภทค่าตอบแทน -</option>-->
 								<?
 								if($arr[shop][price_plan]>0){
 									$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
 									$res[category] = $db->select_query("SELECT * FROM plan_product_price_name  where id=".$arr[shop][price_plan]."");
 									while($arr[category] = $db->fetch($res[category])){
-										echo "<option value=\"".$arr[category][id]."\"";
+										//echo "<option value=\"".$arr[category][id]."\"";
 										if($arr[category][id] ==$arr[project][price_plan]){
-											echo " Selected";
+											//echo " Selected";
 										}
-										echo ">".$arr[category][topic_th]." </option>";
+										//echo ">".$arr[category][topic_th]." </option>";
+										?>
+										<div class=" ">
+										<input type="radio" name="price_plan" class="price_plan" value="<?=$arr[category][id];?>" id="price_plan<?=$arr[category][id];?>" style="height:30px; width:30px;box-shadow:none"/> <label for="price_plan<?=$arr[category][id];?>" class="label_price_plan"><?=$arr[category][topic_th];?></label>
+										</div>
+										<?php
 									}
 									$db->closedb ();
 								}
@@ -277,11 +270,16 @@
 									$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
 									$res[category] = $db->select_query("SELECT * FROM plan_product_price_name  where id=".$arr[shop][price_plan_2]."");
 									while($arr[category] = $db->fetch($res[category])){
-										echo "<option value=\"".$arr[category][id]."\"";
+										//echo "<option value=\"".$arr[category][id]."\"";
 										if($arr[category][id] ==$arr[project][price_plan]){
-											echo " Selected";
+											//echo " Selected";
 										}
-										echo ">".$arr[category][topic_th]." </option>";
+										//echo ">".$arr[category][topic_th]." </option>";
+										?>
+										<div class=" ">
+										<input type="radio" name="price_plan" class="price_plan" value="<?=$arr[category][id];?>" id="price_plan<?=$arr[category][id];?>" style="height:30px; width:30px;box-shadow:none"/> <label for="price_plan<?=$arr[category][id];?>" class="label_price_plan"><?=$arr[category][topic_th];?></label>
+										</div>
+										<?php
 									}
 									$db->closedb ();
 								}
@@ -291,24 +289,53 @@
 									$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
 									$res[category] = $db->select_query("SELECT * FROM plan_product_price_name  where id=".$arr[shop][price_plan_3]."");
 									while($arr[category] = $db->fetch($res[category])){
-										echo "<option value=\"".$arr[category][id]."\"";
+										//echo "<option value=\"".$arr[category][id]."\"";
 										if($arr[category][id] ==$arr[project][price_plan]){
-											echo " Selected";
+											//echo " Selected";
 										}
-										echo ">".$arr[category][topic_th]." </option>";
+										//echo ">".$arr[category][topic_th]." </option>";
+										?>
+										<div class=" ">
+										<input type="radio" name="price_plan" class="price_plan" value="<?=$arr[category][id];?>" id="price_plan<?=$arr[category][id];?>" style="height:30px; width:30px;box-shadow:none"/> <label for="price_plan<?=$arr[category][id];?>" class="label_price_plan"><?=$arr[category][topic_th];?></label>
+										</div>
+										<?php
 									}
 									$db->closedb ();
 								}
 								?>
 								<?
 								?>
-							</select>
+							<!--</select>-->
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+<!-- DIV CAR -->	
+	<div class="<?= $coldata?>" id="show_transfer_detail" style="margin-top:20px;padding:5px;   border-radius: 10px; border: 1px solid #ddd;background-color:#Fff;  margin-bottom: 0px; box-shadow: 0px  0px 5px #DADADA  ; display:nones  ">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td><div class="font-28" style="color:<?=$main_color?>"><b>ข้อมูลรถรับส่ง</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="margin-top:-50px;" id="show_car_detail">
+			<?   include ("mod/booking/load/booking/car.php");   ?>
+		</div>
+		<table width="100%"  border="0" cellspacing="0" cellpadding="0" id="button_show_car_detail" style="display:none">
+			<tr >
+				<td width="100%"  style="display:none" ><button type="button"  id="back_booking_step_2" class="btn btn-block btn-default"  style="width:100%px "><span class="font-28"><i class="    fa fa-chevron-circle-left"></i>&nbsp;ย้อนกลับ</button></td>
+				<td width="100%"  >
+					<div class="border-alert"  id="div_submit_booking_step_2"  style="width:100%; display:none ">
+						<button id="submit_booking_step_2" type="button" class="btn  btn-primary" style="width:100% "><span class="font-28"><i class="    fa fa-chevron-circle-right"></i>&nbsp;ขั้นตอนต่อไป</button></div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+<!-- BTN  -->	
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 		<tbody>
 			<tr>
@@ -456,9 +483,11 @@
 				document.getElementById('child').focus() ;
 				return false ;
 			}
-			if(document.getElementById('price_plan').value=="" ) {
+			var price_plan = $('.price_plan').val();
+//			if(document.getElementById('price_plan').value=="" ) {
+			if(price_plan=="" ) {
 				alert('กรุณาเลือกประเภทค่าตอบแทน');
-				document.getElementById('price_plan').focus() ;
+				//document.getElementById('price_plan').focus() ;
 				return false ;
 			}
 			$.post('go.php?name=booking&file=savedata&action=add&type=driver&driver=<?=$arr[web_user][id]?>',$('#edit_form').serialize(),function(response){
