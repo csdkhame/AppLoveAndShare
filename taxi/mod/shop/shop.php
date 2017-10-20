@@ -79,8 +79,9 @@ while($arr[project] = $db->fetch($res[project])){
      <?php
       $db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
  
-$res[opentime] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1   order by id asc ");
+$res[opentime] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1   order by id asc ");
 $count_days = $db->rows($res[opentime]);
+//echo $_GET[type];
 
      ?>
     <tr>
@@ -175,17 +176,17 @@ $count_days = $db->rows($res[opentime]);
       <span class="font-22">
     	<?php
     	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-    	$res[openanytime] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1 and open_always=1  ");
+    	$res[openanytime] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1 and open_always=1  ");
     	$count_openanytime = $db->rows($res[openanytime]);
     	
     	if($count_openanytime > 0){
     		
     		$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-    		$res[openanytime2] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1 and open_always=0  ");
+    		$res[openanytime2] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1 and open_always=0  ");
     		$count_openanytime2 = $db->rows($res[openanytime2]);
     		if($count_openanytime2 > 0){
 					$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-					$res[showtimeopen] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  order by id asc  ");
+					$res[showtimeopen] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1  order by id asc  ");
 					?>
 					<table width="100%" cellpadding="0" cellspacing="0">
 					<tr>
@@ -263,16 +264,16 @@ $count_days = $db->rows($res[opentime]);
 				<?php
 			}else{
 				$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-	    	$res[start_h] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by start_h ");
+	    	$res[start_h] = $db->select_query("SELECT * FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1  group by start_h ");
 	    	$count_start_h = $db->rows($res[start_h]);
 	    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-	    	$res[start_m] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by start_m ");
+	    	$res[start_m] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1  group by start_m ");
 	    	$count_start_m = $db->rows($res[start_m]);
 	    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-	    	$res[finish_h] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by finish_h ");
+	    	$res[finish_h] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1  group by finish_h ");
 	    	$count_finish_h = $db->rows($res[finish_h]);
 	    	$db->connectdb(DB_NAME_APP,DB_USERNAME,DB_PASSWORD);
-	    	$res[finish_m] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$_GET[type]." and status=1  group by finish_m ");
+	    	$res[finish_m] = $db->select_query("SELECT id FROM shopping_open_time   WHERE product_id=".$arr[project][id]." and status=1  group by finish_m ");
 	    	$count_finish_m = $db->rows($res[finish_m]);
 	    	$total_times = $count_start_h + $count_start_m + $count_finish_h + $count_finish_m;
 				if($total_times == 4){
